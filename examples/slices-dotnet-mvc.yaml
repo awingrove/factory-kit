@@ -1,0 +1,53 @@
+# slices.yaml — .NET MVC flavor (worked stub; grammar: factory-kit SLICES.md)
+# Role vocabulary for this flavor: controller, core, views, models, js,
+# unit_tests, e2e_specs. Declare every role on every slice, [] included.
+slices:
+  - id: SHELL
+    name: Application Shell
+    roles:
+      controller:
+        - src/App.Web/Controllers/HomeController.cs
+      core: []
+      views:
+        - src/App.Web/Views/Home/**
+        - src/App.Web/Views/Shared/**
+      models: []
+      js: []
+      unit_tests: []
+      e2e_specs:
+        - e2e-tests/tests/shell.spec.js
+    owns: []
+    calls: []
+    tests:
+      - e2e: shell::should reach the dashboard from the nav bar
+    entry_point: app root -> Home -> dashboard
+
+  - id: MF
+    name: Manage Widgets
+    roles:
+      controller:
+        - src/App.Web/Controllers/WidgetController.cs
+      core:
+        - src/App.Core/Widgets/**
+      views:
+        - src/App.Web/Views/Widget/**
+      models:
+        - src/App.Web/Models/Widget/**
+      js: []
+      unit_tests:
+        - src/App.Tests/Widgets/**
+      e2e_specs:
+        - e2e-tests/tests/widget-crud.spec.js
+    owns:
+      - Widgets            # the only writer of the Widgets table
+    calls:
+      - SHELL
+    tests:
+      - unit: WidgetRepositoryTests.GetAll_ReturnsStableNameOrder
+      - e2e: widget-crud::should create a widget from the nav bar link
+    entry_point: nav bar -> Widgets -> list
+
+allowlist:
+  - src/App.Web/Program.cs
+  - src/App.Web/Views/Shared/**
+  - e2e-tests/helpers/**
