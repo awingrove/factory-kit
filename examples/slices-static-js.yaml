@@ -1,0 +1,48 @@
+# slices.yaml — static-JS flavor (worked stub; grammar: factory-kit SLICES.md)
+# Role vocabulary for this flavor: pages, js, css, unit_tests, e2e_specs.
+# Declare every role on every slice, [] included.
+slices:
+  - id: SHELL
+    name: Page Shell
+    roles:
+      pages:
+        - index.html
+      js:
+        - js/shell/**
+      css:
+        - css/shell/**
+      unit_tests: []
+      e2e_specs:
+        - e2e/shell.spec.js
+    owns: []
+    calls: []
+    tests:
+      - e2e: shell::should render the app shell with the nav bar
+    entry_point: index.html (app root)
+
+  - id: PANEL
+    name: Diagram Panel
+    roles:
+      pages:
+        - panel.html
+      js:
+        - js/panel/**
+      css:
+        - css/panel/**
+      unit_tests:
+        - test/panel/**
+      e2e_specs:
+        - e2e/panel.spec.js
+    owns:
+      - panel.html         # the only writer of this page's markup region
+    calls:
+      - SHELL
+    tests:
+      - unit: test/panel/model.test.js::queue depth climbs under load
+      - e2e: panel::should show queue depth climbing as load rises
+    entry_point: index.html -> Diagram Panel link
+
+allowlist:
+  - js/vendor/**
+  - css/base.css
+  - e2e/helpers/**
