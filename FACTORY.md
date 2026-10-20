@@ -16,6 +16,15 @@ file; the process itself is here.
 - **Measure touch, not time.** Each slice records agent class, human
   interventions, guardrail failures, fix commits, and escaped defects —
   wall-clock hours are meaningless across models and sessions.
+- **Lead planning vs. sub-agent execution.** At project bootstrap (or whenever
+  a repo's `AGENTS.md` / `FACTORY.md` does not yet specify them), ask the human
+  which model to use for the lead planning session and which model to use for
+  sub-agent brief execution, and record both in the app's `AGENTS.md` and
+  `FACTORY.md`. Once the design-before-code gate passes and Step 1 (the brief +
+  any `DESIGN.md` amendment) is committed, the lead session dispatches a fresh
+  sub-agent on the project's configured executor model to execute the remaining
+  steps cold from the brief — never implementing the brief inline in the lead
+  session.
 
 ## Process
 
@@ -88,8 +97,11 @@ under these terms:
 - Escalate early: stuck after two failed attempts at the same fix → stop
   and report. Debug artifacts are tracked and removed before commit — none
   ride along in a feature diff.
-- Post-mortem capture: a fix that reveals a systemic gap updates the
-  register and the rule doc in the same change.
+- Post-mortem & human-intervention capture: a bug fix OR an unprompted human
+  intervention correcting a code or process miss (outside the scheduled human
+  gates above) reveals a systemic gap — record a `DL-\d+` entry in
+  [DEBT-REGISTER.md](DEBT-REGISTER.md) and update the governing rule doc in the
+  same change.
 - A truthful failure is worth more to this factory than a fabricated
   success. Ticks, metrics, and claims are only as good as the evidence
   behind them.
