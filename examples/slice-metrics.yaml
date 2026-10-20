@@ -1,0 +1,40 @@
+# slice-metrics.yaml — worked stub (grammar: factory-kit METRICS.md)
+# One entry per delivered brief/stage. Validated by each app's metrics guard.
+entries:
+  - id: BOOTSTRAP-1
+    slice: SHELL
+    name: Phase 1 factory bootstrap & tracer slice
+    brief: docs/plans/2026-10-12-phase1-bootstrap.md
+    agent: frontier
+    lead_model: opencode-go/gemini-4-argon-contributor
+    agent_model: opencode-go/gemini-4-argon-contributor
+    human_interventions: 0
+    agent_review_rounds: 0
+    guardrail_failures: 1
+    fix_commits: 0
+    defects_escaped: 0
+    notes: >-
+      Initial factory scaffold, 6 guardrails with negative-path proofs, and
+      Stage 1 tracer bullet.
+
+  - id: STAGE-3
+    slice: SIM
+    name: Stage 3 — Cache-aside & tick TTL
+    brief: docs/plans/2026-10-20-stage3-cache.md
+    agent: cheap
+    lead_model: opencode-go/gemini-4-argon-contributor
+    agent_model: opencode-go/glm-5.3-flash
+    session_id: ses_ea7fbfc89ffem2uvt97ElDlUh3
+    tokens_input: 140063
+    tokens_output: 32068
+    tokens_reasoning: 33020
+    tokens_cache_read: 8219348
+    cost_usd: 0.3001
+    human_interventions: 0
+    agent_review_rounds: 1
+    guardrail_failures: 0
+    fix_commits: 1
+    defects_escaped: 0
+    notes: >-
+      Executed cold from the Stage 3 brief by GLM-5.3-Flash; one post-step
+      claim-language tightening pass before strict guard-claims landed.

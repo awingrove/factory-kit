@@ -3,8 +3,8 @@
 Every app repo owns one `slices.yaml`. The **grammar of a slice** — which
 file roles exist, what they name — is app-defined per stack flavor. The
 **meta-rules** below are factory-readable: identical in every app, enforced
-by that app's own checker script (kit examples: none yet — the orrery's
-checker is the first).
+by that app's own checker script (reference implementation:
+`stack-orrery/scripts/guard-slices.mjs`).
 
 ## Slice fields (all required)
 
@@ -48,8 +48,9 @@ bootstrap, test helpers). Cross-cutting means genuinely shared, not
 6. **Story-map integrity.** Story-map task ids begin with a declared slice
    id, and every slice id prefixes at least one task id (bidirectional).
 7. **Same-change updates.** `slices.yaml` (and the story map) change in the
-   same commit as the feature they describe. A stale map is a defect, not
-   a cleanup task.
+   same commit/branch as the feature they describe (enforced on PR CI by
+   comparing changed slice files against `--base <ref>`). A stale map is a
+   defect, not a cleanup task.
 
 An app may extend a slice with extra fields (its flavor needs them); the
 meta-rules operate only on the fields above and must keep passing.

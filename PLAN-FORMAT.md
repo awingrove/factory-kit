@@ -31,6 +31,11 @@ plan — executors read both; the spec is binding on every task below.>
 - A tick (`- [x]`) means the step's commit exists on the branch. Ticking
   ahead of the commit is a plan defect; the plan-tick checker requires
   every tick's claim to be evidenced in the diff.
+- **Backticked tokens in step lines:** inside `- [ ]` / `- [x]` checkbox
+  lines, reserve backticks for repo-relative file paths (or shell commands
+  containing spaces). Do not wrap dotted domain literals (such as mini-IP
+  addresses `10.20` or version numbers `1.2`) in backticks inside a step
+  line, or the plan-tick checker will treat them as missing file paths.
 - Sub-steps get their own checkboxes; never bury two verifiable actions in
   one step.
 
