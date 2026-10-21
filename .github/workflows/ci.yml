@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'feat/**', 'feature/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate markdown links and YAML examples
+        run: |
+          python3 - <<'PY'
+          import glob, os, re, sys, yaml
+
+          md_files = sorted(glob.glob("*.md"))
+          if not md_files:
+              sys.exit("ci: no markdown files found (non-vacuity)")
+
+          link_re = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]*)?\)")
+          errors = []
+          checked_links = 0
+          for md in md_files:
+              text = open(md, encoding="utf-8").read()
+              for m in link_re.finditer(text):
+                  target = m.group(1).strip()
+                  if target.startswith(("http://", "https://", "mailto:")):
+                      continue
+                  checked_links += 1
+                  if not os.path.exists(target):
+                      errors.append(f"{md}: broken link -> {target}")
+
+          yaml_files = sorted(glob.glob("examples/*.yaml"))
+          if not yaml_files:
+              sys.exit("ci: no example yaml files found (non-vacuity)")
+          for yf in yaml_files:
+              data = yaml.safe_load(open(yf, encoding="utf-8"))
+              if not isinstance(data, dict) or not data:
+                  errors.append(f"{yf}: empty or non-mapping YAML")
+
+          if errors:
+              for e in errors:
+                  print(e, file=sys.stderr)
+              sys.exit(1)
+          print(f"OK ({len(md_files)} docs, {checked_links} local links, {len(yaml_files)} yaml examples)")
+          PY

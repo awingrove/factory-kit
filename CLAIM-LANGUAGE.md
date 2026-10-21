@@ -11,14 +11,25 @@ keywords:
 - **`DOCUMENTS: <behavior>`** — description of behavior, carrying **no**
   guarantee. The reader may rely on it as description, not as promise.
 
-## The rule
+## The rule (mechanically enforced)
 
-Guarantee-language outside a claim — `guarantees`, `always`, `never`,
-`ensures`, `will` used as a promise, in any comment — is a review defect.
-Either the comment earns a keyword (and the check behind it), or it loses
-the promise. The same applies to claims pasted into prose docs: a rule doc
-may state rules, but a claim that code *enforces* something must name the
-gate that enforces it.
+Every comment paragraph across source and test files obeys three rules,
+enforced in each app's CI by its claim-language guard:
+
+1. **One claim keyword per paragraph:** at most one of `CHECKS:`, `PINS:`, or
+   `DOCUMENTS:` may appear in a single comment paragraph.
+2. **Guarantee words require `CHECKS:` or `PINS:`:** guarantee-language
+   (`guarantees`, `always`, `never`, `ensures`, `will` used as a promise) may
+   appear **only** inside a `CHECKS:` or `PINS:` paragraph — never in an
+   untagged comment and never in a `DOCUMENTS:` paragraph ("description of
+   behavior, carrying no guarantee"). Either the comment earns a `CHECKS:` /
+   `PINS:` keyword and the check behind it, or it drops the promise.
+3. **Non-vacuity:** the guard fails if zero source files or zero claim tags are
+   scanned.
+
+The same discipline applies to claims in prose docs: a rule doc may state
+rules, but a claim that code *enforces* something must name the gate that
+enforces it.
 
 ## Carve-out — pattern note (not yet exercised)
 
