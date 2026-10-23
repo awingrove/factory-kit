@@ -31,6 +31,11 @@ plan — executors read both; the spec is binding on every task below.>
 - A tick (`- [x]`) means the step's commit exists on the branch. Ticking
   ahead of the commit is a plan defect; the plan-tick checker requires
   every tick's claim to be evidenced in the diff.
+- **Backticked tokens in step lines:** inside `- [ ]` / `- [x]` checkbox
+  lines, reserve backticks for repo-relative file paths (or shell commands
+  containing spaces). Do not wrap dotted domain literals (such as mini-IP
+  addresses `10.20` or version numbers `1.2`) in backticks inside a step
+  line, or the plan-tick checker will treat them as missing file paths.
 - Sub-steps get their own checkboxes; never bury two verifiable actions in
   one step.
 
@@ -46,11 +51,16 @@ script is a brief defect: the executor implements exactly what is written,
 and the un-named branches are fabricated (or absent) versions of whatever
 the happy case said.
 
-## Cold-resume contract
+## Cold-resume & sub-agent dispatch contract
 
-Session context lives in the plan file, not in chat history. On resume —
-of a new session, a new model, or a different executor — read the plan and
-its Step-0 references first, then continue from the first unticked step.
+Session context lives in the plan file, not in chat history. Once the human
+design gate passes and Step 1 (the brief + any `DESIGN.md` amendment) is
+committed, the lead session spawns a fresh sub-agent on the project's
+configured executor model (asked of the human at bootstrap and recorded in
+the app's `AGENTS.md` / `FACTORY.md`) to execute the remaining steps cold
+from the brief. On resume — of a sub-agent, a new session, a new model, or a
+different executor — read the plan and its Step-0 references first, then
+continue from the first unticked step.
 Updating the plan (ticks, newly discovered steps, decided questions) happens
 in the same change that advances the work. If the plan's text conflicts
 with a reviewer finding or a fresh recollection of the code, the plan loses

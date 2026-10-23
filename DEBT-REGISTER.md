@@ -40,15 +40,17 @@ Warn-until-three-entries is acceptable at bootstrap; after three entries
 the gate is hard: a shipped slice with no register touch when its PR
 introduced a known cost is review material.
 
-## Post-mortem capture
+## Post-mortem & human-intervention capture
 
-A bug fix whose root cause reveals a systemic gap (a gotcha, a missing
-rule, an unenforced convention) updates the register — and the rule doc the
-gap lived in — in the same commit or an immediate follow-up. Never
-optional cleanup. Defect entries exist so escapes are classifiable: name
-the injection stage and the detection stage honestly, including when the
-detection stage is "human review, while the same author's tests all
-passed" — that is a signal about the suite, not an embarrassment.
+A bug fix — or an unprompted human intervention correcting a code or process
+miss outside the scheduled human gates — whose root cause reveals a systemic
+gap (a gotcha, a missing rule, an unenforced convention) updates the register
+(`defects: DL-\d+`) and the rule doc the gap lived in, in the same commit or
+an immediate follow-up. Never optional cleanup. Defect entries exist so
+escapes are classifiable: name the injection stage and the detection stage
+honestly, including when the detection stage is "human intervention during
+session" or "human review, while the same author's tests all passed" — that
+is a signal about the process or suite, not an embarrassment.
 
 Example shapes (open / closed / defect), condensed from VitaTrack:
 
