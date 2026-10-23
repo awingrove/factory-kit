@@ -39,6 +39,18 @@ plan — executors read both; the spec is binding on every task below.>
 - Sub-steps get their own checkboxes; never bury two verifiable actions in
   one step.
 
+## Boundary contracts and counter-examples
+
+A boundary contract that conditions on input — routing tables, narrative
+machines, component responses, geometry families — is specified by its
+branch conditions, not its happy path. Every such contract names at least
+one **counter-example** the mechanism must treat differently ("a GET trace
+keeps the Stage 4 story — no async 202"), and the brief's test list pins
+that counter-example by name. A contract written only as the happy-case
+script is a brief defect: the executor implements exactly what is written,
+and the un-named branches are fabricated (or absent) versions of whatever
+the happy case said.
+
 ## Cold-resume & sub-agent dispatch contract
 
 Session context lives in the plan file, not in chat history. Once the human

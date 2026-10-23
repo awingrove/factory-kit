@@ -38,10 +38,19 @@ file; the process itself is here.
 4. **Fill** — depth: validation, edge cases, real data. Tracer stays green.
 5. **Verify** — run the repo's named gate: format → build → arch checks →
    slice unit → slice e2e (click-through) → DoD below.
-6. **Record** — debt register touched if a systemic gap surfaced
+6. **Demo** — before the PR, the coordinator (not the human) walks the
+   slice's demonstrable behavior against the brief's contracts — scripted
+   e2e or an interactive pass — including each contract's named
+   counter-example. A failing demo **reopens implementation** (back the
+   number of steps it takes). This loop is the process's working
+   back-and-forth between coordinator and executor; skipping it delegates
+   defect discovery to the human's own exploration.
+7. **Record** — debt register touched if a systemic gap surfaced
    ([DEBT-REGISTER.md](DEBT-REGISTER.md)); metrics and token/cost telemetry
-   recorded ([METRICS.md](METRICS.md)); plan updated.
-7. **Ship** — push the branch, open the PR, report ready with green
+   recorded ([METRICS.md](METRICS.md)) — interventions, red runs, fix
+   commits, and escaped defects at their true counts, amended when a
+   post-merge fix tour shows them; plan updated.
+8. **Ship** — push the branch, open the PR, report ready with green
    checks. **The human approves and merges** — server-side rulesets reject
    agent attempts to approve, merge, delete, or force-push
    ([AGENT-IDENTITY.md](AGENT-IDENTITY.md)). Closing the agent's own PRs is
