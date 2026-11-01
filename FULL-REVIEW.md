@@ -33,10 +33,10 @@ response when a single theme demands investigation between full reviews;
 it reuses the same four phases at point-of-need without counting toward,
 or resetting, the full-review cadence.
 
-The review never starts on its own: the trigger *prompts the human at a
-scheduled gate*, the human approves the launch (and the worktree backend for
+The review never starts on its own: the trigger _prompts the human at a
+scheduled gate_, the human approves the launch (and the worktree backend for
 cost tier), then the factory runs it. It does not auto-start, and it is
-always the *merge* (human).
+always the _merge_ (human).
 
 ## The pipeline (what "running it" means exactly)
 
@@ -61,13 +61,13 @@ lead session plans, verifies, and writes the final aggregate.
    before writing and record no findings — facts are briefs' whole job.
 3. **Reviews (phase 3, reviewer sub-agents, one per chunk).** Use a fresh
    stronger model per reviewer. Each reviewer reads the repo standards
-   + their brief + the actual files named **and verifies the brief against
-   the code** — a brief-vs-code mismatch is itself a finding. Every finding
-   cites `file:line` evidence. If real complexity is under judgment, the
-   reviewer's runtime may delegate *single items* to a stronger-still
-   adjudicator; when a runtime cannot dispatch models itself, the reviewer
-   flags `deep_dive: yes` items with targeted prompts and the orchestrator
-   dispatches them, consolidating verdicts into the same report.
+   - their brief + the actual files named **and verifies the brief against
+     the code** — a brief-vs-code mismatch is itself a finding. Every finding
+     cites `file:line` evidence. If real complexity is under judgment, the
+     reviewer's runtime may delegate _single items_ to a stronger-still
+     adjudicator; when a runtime cannot dispatch models itself, the reviewer
+     flags `deep_dive: yes` items with targeted prompts and the orchestrator
+     dispatches them, consolidating verdicts into the same report.
 4. **Assessment (phase 4, orchestrating lead).** Read all reports,
    de-duplicate across chunks (same root cause, multiple symptoms → one
    aggregated item ranked by impact). Write the merged `assessment.md`
@@ -84,6 +84,63 @@ specific models. Model lists churn; the tier contract is the durable rule.
 Only the PR body / assessment headers carry the concrete models used, for
 telemetry.
 
+## Instruments (optional per run; visibility, never gates)
+
+Instruments are deterministic tools a review _runs to produce evidence_;
+findings cite their output, but no review instrument may become a slice
+gate. Batch instruments are slow and their survivors need triage — those
+are exactly the properties a per-commit gate must not have (the factory's
+per-slice gates stay blunt and honest; see FACTORY.md gate-rejection).
+Each map.md names its instruments up front; a review that runs an
+instrument and cites nothing it surfaced has wasted its evidence budget.
+
+1. **Mutation pass (reviewer tier, phase 3).** Over a shortlist of
+   high-risk pure-logic modules — hand-nominated in the map (e.g. pure
+   mapping functions with claimed-but-absent pins, untested view-model
+   cores). A surviving mutant is a _finding quadrant_: no pin covers the
+   behavior the mutant altered. Survivors are triaged, not
+   auto-converted: kill-by-test, or justify as equivalent behavior
+   (equivalent mutants are documented in the report, never silently
+   ignored). Mutation testing cannot detect _missing_ behavioral pins on
+   hand-copied prose/mirrors — it complements, it does not replace,
+   verify-against-source.
+2. **Duplication similarity scan (map or phase 2).** Structural-similarity
+   tooling over the chunk's files surfaces near-identical blocks as
+   measured facts, raising firsthand duplication rows like "the same
+   constant is declared in N files" from researcher diligence to
+   instrument output. Thresholds are map-declared per repo (structural
+   language, formatting normalization); the scan is evidence, the
+   register row's paydown decides whether to merge or consciously keep
+   duplicates.
+3. **Unproven-load table (map phase).** A per-function table of
+   complexity against the tests that carry it — the load no test bears.
+   As _directional signal_, not a threshold. A universal numeric gate
+   ("every function under a fixed load") is an anti-pattern for
+   state-machine-heavy domains where complexity concentrates by design
+   in a few honest dispatchers; the map decides which functions are
+   load-bearing by design and marks them, so the table is read with that
+   answer in hand. An app repo may wrap the table in its own mechanical
+   tool (the way [PR-NOTES.md](PR-NOTES.md) instantiate rules locally);
+   the kit contract is the reading, not the threshold.
+4. **Failing-witnessed-first (phase 2/3, process instrument).** When a
+   brief pins counter-examples or other negative branches, the executing
+   or reviewing agent records the counter-example witnessed
+   failing-for-the-expected-reason in the session log before reporting
+   green. This is evidence-of-failure, kept in the log — never a commit
+   (slices commit only verify-green), never a claim without the
+   transcript anchor.
+
+## Attack the premise (triage doctrine)
+
+When two or more findings —- or two rejected fixes — trace to one shared
+design decision, the assessment names that premise in a single sentence,
+lists the actors that created it, and registers the premise row, not the
+symptoms. Registering the _premise_ as the debt row (the systemic gap in
+[DEBT-REGISTER.md](DEBT-REGISTER.md)) is the default; per-symptom rows
+carry register IDs only when the premise is already fixed and the
+remnants are independent. A review that files five symptom rows under
+one premise has hidden the actual decision behind work.
+
 ## The rules that keep the reviews honest
 
 1. **No review of briefs.** A reviewer who reads only the brief reviews the
@@ -94,7 +151,7 @@ telemetry.
    correct their researcher's numbers; brief-vs-data correction is a
    finding too.
 3. **Zero-Critical is information.** A full review that returns no
-   findings-grade defects is still an audit *evidence event* (verified
+   findings-grade defects is still an audit _evidence event_ (verified
    counts, honest-ledger adjudication, praise register). Empty is not
    "nothing happened" — record what was verified.
 4. **The review reviews the process as well as the code.** Brief contracts
