@@ -41,6 +41,7 @@ These meanings are locked. Changing one is a kit change, not a local one.
 - [DESIGN-REVIEW.md](DESIGN-REVIEW.md) — pre-briefing design-before-code checklist (`DL-002` fact-check + guardrail dry-run).
 - [DEBT-REGISTER.md](DEBT-REGISTER.md) — technical-debt register: open / closed / defect shapes + human-intervention capture.
 - [METRICS.md](METRICS.md) — slice metrics, intervention ledger, and OpenCode session telemetry.
+- [FULL-REVIEW.md](FULL-REVIEW.md) — the periodic deep review: trigger (start-of-month or cadence count, human-approved, never auto-fired), the four-phase pipeline (map → briefs → verified reviews → ranked assessment), findings→register wiring, capability-tier model contract.
 - [PR-NOTES.md](PR-NOTES.md) — PR-body shape: decision half on top, record collapsed, review path with time cost, risk map, decisions needed.
 - [CLAIM-LANGUAGE.md](CLAIM-LANGUAGE.md) — CHECKS / PINS / DOCUMENTS for guarantee-comments.
 - [TEST-RULES.md](TEST-RULES.md) — the testing line: no-mock, no-double-200, entry-point coverage, click-through arrival.
