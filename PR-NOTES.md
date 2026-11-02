@@ -78,3 +78,13 @@ checklist, not merge); link-validate the pointers (`Review path` files
 exist); kit leaves enforcement local — the rule above is the canonical
 shape and the checklist language, not a shared script (no shared code,
 see FACTORY.md Coupling).
+
+One CI-specific trap when the shape check runs as a workflow step
+(observed in stack-orrery, 2026-11-02): a PR body edited *after* the
+workflow ran does not re-trigger CI under the default `pull_request`
+types — the check then judges a stale event snapshot and blocks a merge
+on a body that is actually fine. Include `edited` in the workflow's
+`pull_request` types (`[opened, synchronize, reopened, edited]`) so a
+body edit re-runs the check against the live body; a workflow-rerun
+alone replays the original payload and would re-fail on the same stale
+snapshot.
