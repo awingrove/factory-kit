@@ -27,9 +27,24 @@ by its metrics guard script.
 | `lead_model` | optional | Exact `provider/model` of the lead planning session. |
 | `agent_model` | optional | Exact `provider/model` of the sub-agent executor session(s). |
 | `session_id` | optional | Sub-agent session id(s) (`ses_...`) from which token/cost telemetry was extracted. |
-| `tokens_input` / `tokens_output` / `tokens_reasoning` / `tokens_cache_read` | optional | Exact token counts from the executor session export. |
+| `tokens_input` / `tokens_output` / `tokens_reasoning` / `tokens_cache_read` | optional | Exact token counts from the executor session export. Cache reads dominate the units; on most providers they price near-noise. |
 | `cost_usd` | optional | Dollar spend reported by the harness for the executor session (`0` on free-tier models is a real measurement, not an omission). |
 | `notes` | optional | Folded prose summary of red cycles, mechanical deviations, or review findings. |
+
+| `tokens_reasoning` / `tokens_cache_read` / `cost_usd` | optional | Session telemetry from the executor's transcript, for us-time accounting. Cache reads dominate the units; on most providers they price near-noise. |
+
+## Reading the numbers (token drivers)
+
+Brief-contract tightness and red-gate loops are the token drivers the
+ledger can actually move: a brief with precise boundary contracts and
+pre-titled pins spends its tokens on implementation; a vague brief spends
+them on discovery and red-gate debugging. So read `guardrail_failures`
+as the driver's gauge — ~2 per slice (a formatting or quoting snag caught
+by a named guard) is healthy; a double-digit count is the brief
+under-specifying a constraint, and the fix belongs in the brief's
+boundary contracts, not in the executor's patience. Token totals follow
+that gauge: the same executor on the same tier moves far fewer tokens
+when boundary contracts are tight than when discovery happens in-session.
 
 ## Extracting usage numbers (OpenCode V2)
 
