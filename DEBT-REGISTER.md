@@ -52,6 +52,14 @@ honestly, including when the detection stage is "human intervention during
 session" or "human review, while the same author's tests all passed" — that
 is a signal about the process or suite, not an embarrassment.
 
+Same-repo capture stays **same commit or immediate follow-up**. Cross-repo
+capture — a gap whose rule doc lives in another repo — requires both
+changes with reciprocal citations: the register row's
+`systemic_gap`/`closed_in` names the kit PR/commit, the kit change names
+the `DL-\d+` id; neither counts done until both land. App repos mirror
+this rule text in their `AGENTS.md` post-mortem section, so a divergence
+between the two is a reportable defect.
+
 Example shapes (open / closed / defect), condensed from VitaTrack:
 
 ```yaml

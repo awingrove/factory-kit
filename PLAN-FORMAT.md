@@ -39,6 +39,12 @@ plan — executors read both; the spec is binding on every task below.>
 - Sub-steps get their own checkboxes; never bury two verifiable actions in
   one step.
 
+**Style note:** before restyling briefs, read
+`experiments/ste-briefs/REPORT.md` — recommendation: **do not adopt
+controlled-language briefs** (inconclusive under its pre-registered rule;
+the observed quality losses came from brief-contract defects, not prose
+style).
+
 ## Boundary contracts and counter-examples
 
 A boundary contract that conditions on input — routing tables, narrative
@@ -50,6 +56,14 @@ that counter-example by name. A contract written only as the happy-case
 script is a brief defect: the executor implements exactly what is written,
 and the un-named branches are fabricated (or absent) versions of whatever
 the happy case said.
+
+The same discipline covers manifest references: every manifest field, id,
+or test-ref named by a brief must be satisfiable in the repo's actual
+manifest grammar. An unsatisfiable clause (C19's "story with the next
+unused id" — storymap ids live on tasks, not stories) is a Step-1 brief
+defect, handled as an authoring and human-review discipline — not a
+mechanical prose checker. Registered as `DL-6` in stack-orrery's defect
+register.
 
 ## Cold-resume & sub-agent dispatch contract
 
