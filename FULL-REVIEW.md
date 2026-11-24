@@ -129,6 +129,15 @@ instrument and cites nothing it surfaced has wasted its evidence budget.
    green. This is evidence-of-failure, kept in the log — never a commit
    (slices commit only verify-green), never a claim without the
    transcript anchor.
+5. **Diff-blind audit + blind scoring (committed pipeline).** A committed
+   audit script (`experiments/ste-briefs/audit-session.mjs`) verifies a
+   batch run's session/tool-call evidence, and blind scoring grades runs
+   under a frozen rubric in neutral-name workspaces, separated from the
+   change's own executor and rewriter. On the STE-brief experiment the
+   pipeline caught two contamination events (zero data leakage) and one
+   escaped-defect class that the per-slice gate passed in every arm — the
+   gate verifies what tests pin. The map names it, findings cite it;
+   it stays evidence, never a gate.
 
 ## Attack the premise (triage doctrine)
 
@@ -167,6 +176,16 @@ one premise has hidden the actual decision behind work.
 6. **The review PR follows [PR-NOTES.md](PR-NOTES.md)** — decision half
    (TL;DR, review path with time cost, decisions needed, risk map,
    verification), record collapsed to the summary details block.
+7. **A rubric states its scoring policy before it scores.** Any future
+   rubric grading agent output declares, before any run is scored, how it
+   treats diff-invisible process items, fidelity, churn, and sanctioned
+   extractions — the STE-brief experiment's blind-scoring interview
+   showed grader disagreement on exactly these was a policy variable, not
+   a perception variable (the 5-question human interview is one technique
+   for surfacing the policy, not canonical). Rubric ceilings are stated
+   honestly: on change C24, 8/9 runs scored a perfect 52/52 and the tail
+   also tied (A = C = 0.00 defects) — some changes are undiscriminable on
+   any metric, and the review says so instead of ranking noise.
 
 ## Enforcement hook (app repos)
 
